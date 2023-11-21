@@ -12,9 +12,8 @@ const app = express();
 //   res.send("You can post to this endpoint...");
 // });
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json}`),
-);
+// const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`));
+const tours = JSON.parse(fs.readFileSync(`tours-simple.json`));
 // const tours = JSON.parse(fs.readFileSync("tours-simple.json"));
 
 app.get("/api/v1/tours", (req, res) => {
