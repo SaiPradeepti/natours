@@ -28,12 +28,37 @@ app.get("/api/v1/tours", (req, res) => {
   });
 });
 
+// RESPONDING TO URL Parameters
+// define route using get to accept requests which need info of particular tour
+// for example: /api/v1/tours/5
+// add /:id at the end of the route /api/v1/tours
+// add /:id? at the end of the route /api/v1/tours to make the parameter optional
+// req.params is where all the Url parameters are stored
+app.get("/api/v1/tours/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (id > tours.length) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Invalid ID",
+    });
+  }
+
+  const tour = tours.find((tour) => tour.id === id);
+  res.status(200).json({
+    status: "success",
+    data: {
+      tour: tour,
+    },
+  });
+});
+
 app.post("/api/v1/tours", (req, res) => {
   // console.log(req.body);
   const newId = tours[tours.length - 1].id + 1;
   const newTour = {
     id: newId,
-    ...req.body,
+    ...req.body, //need to add the middleware for data to be on request "app.use(express.json());"
   };
   tours.push(newTour);
   fs.writeFile(`tours-simple.json`, JSON.stringify(tours), (err) => {
