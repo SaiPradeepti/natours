@@ -13,6 +13,10 @@
       "name": "start",
       "command": "yarn start",
       "runAtStart": true
+    },
+    "npm install morgan": {
+      "name": "morgan",
+      "command": "npm install morgan"
     }
   }
 }
