@@ -166,20 +166,15 @@ const deleteUser = (req, res) => {
 // app.delete("/api/v1/tours/:id", deleteTour);
 
 // 3) ROUTES
+app.use("/api/v1/tours", tourRouter); // creating sub application for the routes
+const tourRouter = express.Router();
+tourRouter.route("/").get(getAllTours).post(createTour);
+tourRouter.route("/:id").get(getTour).patch(updateTour).delete(deleteTour);
 
-app.route("/api/v1/tours").get(getAllTours).post(createTour);
-app
-  .route("/api/v1/tours/:id")
-  .get(getTour)
-  .patch(updateTour)
-  .delete(deleteTour);
-
-app.route("/api/v1/users").get(getAllUsers).post(createUser);
-app
-  .route("/api/v1/users/:id")
-  .get(getUser)
-  .patch(updateUser)
-  .delete(deleteUser);
+app.use("/api/v1/users", userRouter);
+const userRouter = express.Router();
+userRouter.route("/").get(getAllUsers).post(createUser);
+userRouter.route("/:id").get(getUser).patch(updateUser).delete(deleteUser);
 
 // 4) START SERVER
 
