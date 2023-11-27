@@ -1,9 +1,10 @@
 const fs = require("fs");
+
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`));
-const tours = JSON.parse(fs.readFileSync(`tours-simple.json`));
+const tours = JSON.parse(fs.readFileSync("tours-simple.json"));
 // const tours = JSON.parse(fs.readFileSync("tours-simple.json"));
 
-const getAllTours = (req, res) => {
+exports.getAllTours = (req, res) => {
   console.log(req.requestTime);
   res.status(200).json({
     status: "success",
@@ -22,7 +23,7 @@ const getAllTours = (req, res) => {
 // add /:id at the end of the route /api/v1/tours
 // add /:id? at the end of the route /api/v1/tours to make the parameter optional
 // req.params is where all the Url parameters are stored
-const getTour = (req, res) => {
+exports.getTour = (req, res) => {
   const id = parseInt(req.params.id);
 
   if (id > tours.length) {
@@ -41,7 +42,7 @@ const getTour = (req, res) => {
   });
 };
 
-const createTour = (req, res) => {
+exports.createTour = (req, res) => {
   // console.log(req.body);
   const newId = tours[tours.length - 1].id + 1;
   const newTour = {
@@ -59,7 +60,7 @@ const createTour = (req, res) => {
   });
 };
 
-const updateTour = (req, res) => {
+exports.updateTour = (req, res) => {
   if (parseInt(req.params.id) > tours.length) {
     return res.status(404).json({
       status: "fail",
@@ -81,7 +82,7 @@ const updateTour = (req, res) => {
   });
 };
 
-const deleteTour = (req, res) => {
+exports.deleteTour = (req, res) => {
   if (parseInt(req.params.id) > tours.length) {
     return res.status(404).json({
       status: "fail",
@@ -97,5 +98,3 @@ const deleteTour = (req, res) => {
     });
   });
 };
-
-module.exports = { getAllTours, getTour, createTour, updateTour, deleteTour };
